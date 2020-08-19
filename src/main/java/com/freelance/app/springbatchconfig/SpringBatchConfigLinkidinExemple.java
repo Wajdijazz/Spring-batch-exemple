@@ -98,8 +98,9 @@ public class SpringBatchConfigLinkidinExemple  extends QuartzJobBean {
 
 	/**
    	  * configure Quartz scheduler to run Spring batch jobs configured using Spring boot Java configuration. 
-   	  *Although, Spring’s default scheduler is also good, but quartz does the scheduling and invocation of tasks much better and in more configurable way. 
-    	 *This leaves Spring batch to focus on creating batch jobs only, and let quartz execute them
+   	  * Although, Spring’s default scheduler is also good, but quartz does the scheduling and invocation of tasks much better and in more configurable way. 
+    	  * This leaves Spring batch to focus on creating batch jobs only, and let quartz execute them
+	  * Trigger instances are also created to configure batch job execution time and frequency.
     	 */
 	@Bean
 	public Trigger trigger() {
@@ -115,8 +116,9 @@ public class SpringBatchConfigLinkidinExemple  extends QuartzJobBean {
 	}
 	
 	  /**
-     * Scheduling with spring batch
-     */
+    	 * Scheduling with spring batch
+    	 * JobDetail instances contain information about QuartzJobBean and information to inject
+    	 */
 	@Bean
 	public JobDetail jobDetail() {
 		return JobBuilder.newJob(SpringBatchConfigLinkidinExemple.class)
@@ -124,9 +126,9 @@ public class SpringBatchConfigLinkidinExemple  extends QuartzJobBean {
 				.build();
 	}
 	
-    /**
-     * Scheduling with spring batch
-     */
+ 	   /**
+   	  * create standard QuartzJobBean instance which we will use to execute batch jobs
+   	  */
 	@Override
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		JobParameters parameters = new JobParametersBuilder(jobExplorer)
