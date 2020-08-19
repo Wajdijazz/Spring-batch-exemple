@@ -83,7 +83,7 @@ public class SpringBatchConfigLinkidinExemple  extends QuartzJobBean {
 	public JobExplorer jobExplorer;
 	
 	/** job run every 30 second"
-	 * Sceduling with spring boot
+	 * We will need to execute spring batch jobs periodically on fixed schedule using some cron expression passed to Spring TaskSchedule
 	 * @throws JobParametersInvalidException 
 	 * @throws JobInstanceAlreadyCompleteException 
 	 * @throws JobRestartException 
@@ -96,9 +96,11 @@ public class SpringBatchConfigLinkidinExemple  extends QuartzJobBean {
 	}
 	
 
-	  /**
-     * Scheduling with spring batch
-     */
+	/**
+   	  * configure Quartz scheduler to run Spring batch jobs configured using Spring boot Java configuration. 
+   	  *Although, Spring’s default scheduler is also good, but quartz does the scheduling and invocation of tasks much better and in more configurable way. 
+    	 *This leaves Spring batch to focus on creating batch jobs only, and let quartz execute them
+    	 */
 	@Bean
 	public Trigger trigger() {
 		SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder
